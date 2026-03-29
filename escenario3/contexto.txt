@@ -1,0 +1,44 @@
+Escenario 3. Lista de reproducción continua de música
+Una aplicación de música debe reproducir canciones de forma continua. 
+Cuando se llega al final de la lista, la reproducción debe volver automáticamente a la primera canción. 
+El usuario puede avanzar a la siguiente canción, eliminar una canción de la lista y mostrar toda la secuencia actual. 
+No se requiere necesariamente retroceder a la canción anterior, pero sí se necesita que la lista nunca “termine”.
+
+
+Lo que se debe analizar
+
+¿La secuencia debe reiniciarse automáticamente?
+
+¿Hay final real de la lista?
+
+¿Se necesita cerrar el recorrido sobre sí mismo?
+
+¿Hace falta moverse hacia atrás?
+
+
+Instrucciones generales
+Para cada escenario, el estudiante debe desarrollar cuatro partes:
+Parte 1. Análisis del problema
+Identificar qué operaciones necesita el sistema y qué características debe tener la estructura.
+Parte 2. Selección de la lista
+Elegir una de las siguientes estructuras y justificar la elección:
+lista simplemente enlazada
+lista doblemente enlazada
+lista circular simplemente enlazada
+lista circular doblemente enlazada
+Parte 3. Implementación
+Implementar desde cero la lista seleccionada, incluyendo:
+clase Nodo
+clase Lista
+agregar
+eliminar
+buscar
+mostrar
+Parte 4. Reflexión
+Explicar por qué la estructura elegida fue adecuada y qué dificultades aparecerían si se hubiera usado otro tipo de lista.
+Restricciones
+No se permite usar ArrayList, LinkedList, List, Queue, Set, Map ni otras estructuras del API de Java.
+Todo debe implementarse con clases propias.
+Cada escenario debe tener su propia justificación.
+La implementación debe estar alineada con la estructura elegida.
+
