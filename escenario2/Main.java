@@ -21,7 +21,7 @@ public class Main {
         historial.irAdelante();
         historial.mostrarActual();
 
-        historial.visitarPagina("Twitter"); // elimina futuras
+        historial.visitarPagina("Twitter");
 
         historial.mostrarHistorial();
     }
