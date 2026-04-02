@@ -56,27 +56,27 @@ public class ListaSimpleCircular<T> implements Iterable<T> {
 
         Cancion<T> nuevaCancion =  new Cancion(valorCancion);
 
-        // Caso 1: Lista vacía - el nuevo nodo apunta a sí mismo
+        
         if(PrimeraCancion== null){
              PrimeraCancion = nuevaCancion;
              PrimeraCancion.setSiguienteCancion(PrimeraCancion);
              UltimaCancion = nuevaCancion;
              return;
         }
-        // Caso 2: Lista con un solo elemento - crea el círculo inicial
+        
         else if(PrimeraCancion.getSiguienteCancion() == null){
             PrimeraCancion.setSiguienteCancion(nuevaCancion);
             nuevaCancion.setSiguienteCancion(PrimeraCancion);
             UltimaCancion = nuevaCancion;
         }
-        // Caso 3: Lista con múltiples elementos - encuentra el último y conecta
+        
         else{
             Cancion<T> aux = PrimeraCancion;
-            // Recorre hasta encontrar el último (su siguiente es el primero)
+            
             while (aux.getSiguienteCancion()!= PrimeraCancion){
                 aux = aux.getSiguienteCancion();  
             }
-            // Conecta el último con el nuevo y el nuevo con el primero
+            
             aux.setSiguienteCancion(nuevaCancion);
             nuevaCancion.setSiguienteCancion(PrimeraCancion);
             UltimaCancion = nuevaCancion;

@@ -130,6 +130,7 @@ public class ListaDobleEnlazada<T> {
             primeJugador.setSiguienteJugador(primeJugador.getSiguienteJugador().getAnteriorJugador());
             primeJugador.getSiguienteJugador().getSiguienteJugador().setAnteriorJugador(primeJugador);
             size--;
+            ultimJugador = primeJugador.getSiguienteJugador().getSiguienteJugador();
 
         }else{
             // Caso 3: Eliminar cualquier otro jugador
