@@ -59,7 +59,7 @@ public class ListaDobleEnlazada<T> {
         jugador<T> nuevoJugador = new jugador<T>(valorJugador);
         
         if(primeJugador == null){
-            // Caso 1: Lista vacía - el nuevo nodo apunta a sí mismo
+            
             primeJugador = nuevoJugador;
             nuevoJugador.setSiguienteJugador(primeJugador);
             nuevoJugador.setAnteriorJugador(primeJugador);
@@ -67,7 +67,7 @@ public class ListaDobleEnlazada<T> {
             return;
         }
         else if(primeJugador.getSiguienteJugador() == null){
-            // Caso 2: Lista con un elemento - crea el círculo inicial
+            
             primeJugador.setSiguienteJugador(nuevoJugador);
             nuevoJugador.setSiguienteJugador(primeJugador);
             nuevoJugador.setAnteriorJugador(primeJugador);
@@ -75,7 +75,7 @@ public class ListaDobleEnlazada<T> {
             ultimJugador = nuevoJugador;
             
         }else{
-            // Caso 3: Lista con múltiples elementos - encuentra el último y lo conecta
+            
             jugador<T> auxJugador = primeJugador;
 
         while(auxJugador.getSiguienteJugador() != primeJugador){
@@ -105,7 +105,7 @@ public class ListaDobleEnlazada<T> {
      */
     public void Eliminar(int indice){
         if(size == 1){
-            // Caso especial: lista con un solo elemento
+            
             primeJugador = null;
             ultimJugador = null;
             size = 0;
@@ -113,11 +113,11 @@ public class ListaDobleEnlazada<T> {
         }
         
         if(indice >= size|| indice < 0){
-            // Validación: índice fuera de límites
+            
             System.out.println("indice por fuera de los limites. ");
             return;
         } else if(indice == 0){
-            // Caso 1: Eliminar el primer jugador
+            
             jugador<T> nuevoPrimeroJugador = primeJugador.getSiguienteJugador();
 
             ultimJugador.setSiguienteJugador(nuevoPrimeroJugador);
@@ -126,14 +126,14 @@ public class ListaDobleEnlazada<T> {
         
             size --;
         }else if (indice == 1){
-            // Caso 2: Eliminar el segundo jugador
+            
             primeJugador.setSiguienteJugador(primeJugador.getSiguienteJugador().getAnteriorJugador());
             primeJugador.getSiguienteJugador().getSiguienteJugador().setAnteriorJugador(primeJugador);
             size--;
             ultimJugador = primeJugador.getSiguienteJugador().getSiguienteJugador();
 
         }else{
-            // Caso 3: Eliminar cualquier otro jugador
+            
             jugador<T> auxJugador = primeJugador;
             int count = 0;
             while(count < indice - 1 ){
@@ -165,19 +165,19 @@ public class ListaDobleEnlazada<T> {
     public void imprimirPorIndice( int indice){
 
         if(indice == 0){
-            // Caso especial: mostrar el primer jugador
+            
             System.out.println(primeJugador);
             return;
         }else if(primeJugador == null){
-            // Validación: lista vacía
+            
             System.out.println("no hay jugadores");
 
         } else if(indice >= size || indice < 0){
-            // Validación: índice fuera de límites
+            
             System.out.println("indice por fuera de lo limites");
 
         } else{
-            // Caso general: buscar el jugador por índice
+            
             jugador<T> auxJugador  = primeJugador;
         int count = 0;
 
@@ -204,14 +204,14 @@ public class ListaDobleEnlazada<T> {
     public void imprimirLista(){
 
         if(primeJugador == null){
-            // Validación: lista vacía
+            
             System.out.println("no hay jugadores");
         }
         
             jugador<T> auxJugador = primeJugador; 
             int count = 0;
             while(count < size){
-                // Imprime el jugador actual y avanza al siguiente
+                
                 System.out.println(auxJugador.getValorJugador());
                 auxJugador = auxJugador.getSiguienteJugador();
                 count++;
