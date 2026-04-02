@@ -1,218 +1,133 @@
 package escenario4;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
-
-/**
- * Implementation of a circular doubly linked list.
- * 
- * This structure is ideal for gaming scenarios where you need:
- * - Bidirectional navigation (forward and backward)
- * - Fast access to first and last elements
- * - Efficient insertion and deletion
- * - Maintaining a circular order of players
- * 
- * Main features:
- * - Each node has reference to next and previous
- * - Last node points to first and vice versa (circular)
- * - Allows traversing the list in both directions infinitely
- * 
- * @param <T> Type of data stored in the list (generic)
- * 
- * Use case: Player management in a game where you need:
- * - Add players to the list
- * - Remove specific players
- * - Navigate forward and backward
- * - Access players by index
- * - Display the entire current list
- * - Maintain an infinite circular order
- */
 public class ListaDobleEnlazada<T> {
-    
-    /** Reference to the first player in the circular list */
-    public jugador<T> firstPlayer;
-    
-    /** Reference to the last player in the circular list */
-    public jugador<T> lastPlayer;
-    
-    /** Counter of the number of players in the list */
+
+    public jugador<T> primeJugador;
+    public jugador<T> ultimJugador;
     public int size;
 
-    /**
-     * Constructor of the circular doubly linked list.
-     * Initializes an empty list with all attributes null/zero.
-     */
     public ListaDobleEnlazada(){
-        firstPlayer = null;
-        lastPlayer = null;
+        primeJugador = null;
+        ultimJugador = null;
         size = 0;
     }
 
-    /**
-     * Adds a new player to the end of the circular list.
-     * 
-     * Cases handled:
-     * - Empty list: new node points to itself
-     * - List with one element: connects first with new and vice versa
-     * - List with multiple elements: finds the last and connects it with the new
-     * 
-     * @param playerValue The value of the player to add
-     */
-    public void addPlayer(T playerValue){
-        jugador<T> newPlayer = new jugador<T>(playerValue);
+    public void AgregarJugador(T valorJugador){
+        jugador<T> nuevoJugador = new jugador<T>(valorJugador);
         
-        if(firstPlayer == null){
-            // Case 1: Empty list - new node points to itself
-            firstPlayer = newPlayer;
-            newPlayer.setNextPlayer(firstPlayer);
-            newPlayer.setPreviousPlayer(firstPlayer);
-            lastPlayer = newPlayer;
+        if(primeJugador == null){
+            primeJugador = nuevoJugador;
+            nuevoJugador.setSiguienteJugador(primeJugador);
+            nuevoJugador.setAnteriorJugador(primeJugador);
+            ultimJugador = nuevoJugador;
             return;
         }
-        else if(firstPlayer.getNextPlayer() == null){
-            // Case 2: List with one element - creates the initial circle
-            firstPlayer.setNextPlayer(newPlayer);
-            newPlayer.setNextPlayer(firstPlayer);
-            newPlayer.setPreviousPlayer(firstPlayer);
-            firstPlayer.setPreviousPlayer(newPlayer);
-            lastPlayer = newPlayer;
+        else if(primeJugador.getSiguienteJugador() == null){
+            primeJugador.setSiguienteJugador(nuevoJugador);
+            nuevoJugador.setSiguienteJugador(primeJugador);
+            nuevoJugador.setAnteriorJugador(primeJugador);
+            primeJugador.setAnteriorJugador(nuevoJugador);
+            ultimJugador = nuevoJugador;
             
         }else{
-            // Case 3: List with multiple elements - finds the last and connects
-            jugador<T> auxPlayer = firstPlayer;
+            jugador<T> auxJugador = primeJugador;
 
-        while(auxPlayer.getNextPlayer() != firstPlayer){
-            auxPlayer = auxPlayer.getNextPlayer();
+        while(auxJugador.getSiguienteJugador() != primeJugador){
+            auxJugador = auxJugador.getSiguienteJugador();
 
         }
-        auxPlayer.setNextPlayer(newPlayer);
-        newPlayer.setNextPlayer(firstPlayer);
-        newPlayer.setPreviousPlayer(auxPlayer);
-        firstPlayer.setPreviousPlayer(newPlayer);
-        lastPlayer = newPlayer;
+        auxJugador.setSiguienteJugador(nuevoJugador);
+        nuevoJugador.setSiguienteJugador(primeJugador);
+        nuevoJugador.setAnteriorJugador(auxJugador);
+        primeJugador.setAnteriorJugador(nuevoJugador);
+        ultimJugador = nuevoJugador;
         }
         size ++;
     }
 
-
-    /**
-     * Removes a player from the circular list by its index.
-     * 
-     * Cases handled:
-     * - Empty list: cannot remove
-     * - Index out of bounds: error message
-     * - Remove first (index 0): updates circular references
-     * - Remove second (index 1): connects first with third
-     * - Remove general (index ≥ 2): connects previous with next of removed
-     * 
-     * @param index Position of the player to remove (0 to size-1)
-     */
-    public void removePlayer(int index){
+    public void Eliminar(int indice){
         if(size == 1){
-            // Special case: list with only one element
-            firstPlayer = null;
-            lastPlayer = null;
+            primeJugador = null;
+            ultimJugador = null;
             size = 0;
             return;
         }
         
-        if(index >= size || index < 0){
-            // Validation: index out of bounds
-            System.out.println("index out of bounds.");
+        if(indice >= size|| indice < 0){
+            System.out.println("indice por fuera de los limites. ");
             return;
-        } else if(index == 0){
-            // Case 1: Remove the first player
-            jugador<T> newFirstPlayer = firstPlayer.getNextPlayer();
+        } else if(indice == 0){
 
-            lastPlayer.setNextPlayer(newFirstPlayer);
-            newFirstPlayer.setPreviousPlayer(lastPlayer);
-            firstPlayer = newFirstPlayer;
+            jugador<T> nuevoPrimeroJugador = primeJugador.getSiguienteJugador();
+
+            ultimJugador.setSiguienteJugador(nuevoPrimeroJugador);
+            nuevoPrimeroJugador.setAnteriorJugador(ultimJugador);
+            primeJugador = nuevoPrimeroJugador;
         
             size --;
-        }else if (index == 1){
-            // Case 2: Remove the second player
-            firstPlayer.setNextPlayer(firstPlayer.getNextPlayer().getPreviousPlayer());
-            firstPlayer.getNextPlayer().getNextPlayer().setPreviousPlayer(firstPlayer);
+        }else if (indice == 1){
+            primeJugador.setSiguienteJugador(primeJugador.getSiguienteJugador().getAnteriorJugador());
+            primeJugador.getSiguienteJugador().getSiguienteJugador().setAnteriorJugador(primeJugador);
             size--;
 
         }else{
-            // Case 3: Remove any other player
-            jugador<T> auxPlayer = firstPlayer;
+            jugador<T> auxJugador = primeJugador;
             int count = 0;
-            while(count < index - 1 ){
+            while(count < indice - 1 ){
 
-                auxPlayer = auxPlayer.getNextPlayer();
+                auxJugador = auxJugador.getSiguienteJugador();
                 count ++;
 
             }
-            jugador<T> nextToRemove = auxPlayer.getNextPlayer().getNextPlayer();
-            auxPlayer.setNextPlayer(nextToRemove);
-            nextToRemove.setPreviousPlayer(auxPlayer);
+            jugador<T> siguienteBorrar = auxJugador.getSiguienteJugador().getSiguienteJugador();
+            auxJugador.setSiguienteJugador(siguienteBorrar);
+            siguienteBorrar.setAnteriorJugador(auxJugador);
             size--;
 
             
         }
     }
 
+    public void imprimirPorIndice( int indice){
 
-
-    /**
-     * Searches and displays a specific player by its index.
-     * 
-     * Cases handled:
-     * - Empty list: message indicating no players
-     * - Index out of bounds: error message
-     * - Index 0: shows the first player directly
-     * - General index: traverses until finding the requested player
-     * 
-     * @param index Position of the player to search (0 to size-1)
-     */
-    public void printByIndex(int index){
-        if(index == 0){
-            // Special case: show the first player
-            System.out.println(firstPlayer);
+        if(indice == 0){
+            System.out.println(primeJugador);
             return;
-        }else if(firstPlayer == null){
-            // Validation: empty list
-            System.out.println("no players");
-        } else if(index >= size || index < 0){
-            // Validation: index out of bounds
-            System.out.println("index out of bounds");
+        }else if(primeJugador == null){
+            System.out.println("no hay jugadores");
+
+        } else if(indice >= size || indice < 0){
+            System.out.println("indice por fuera de lo limites");
+
         } else{
-            // General case: search player by index
-            jugador<T> auxPlayer = firstPlayer;
+            jugador<T> auxJugador  = primeJugador;
         int count = 0;
 
-        while (count < index) {
-            auxPlayer = auxPlayer.getNextPlayer();
+        while (count < indice) {
+            auxJugador = auxJugador.getSiguienteJugador();
             count++;
         }
-        System.out.println(auxPlayer.getPlayerValue());
+
+        System.out.println(auxJugador.getValorJugador());
+
         }
+
         
     }
 
-    /**
-     * Displays all players in the list in circular order.
-     * 
-     * Functionality:
-     * - If the list is empty: shows appropriate message
-     * - Traverses circularly showing each player
-     * - Uses a counter to avoid infinite loops
-     */
-    public void printList(){
-        if(firstPlayer == null){
-            // Validation: empty list
-            System.out.println("no players");
-            return;
+    public void imprimirLista(){
+
+        if(primeJugador == null){
+            System.out.println("no hay jugadores");
         }
         
-            jugador<T> auxPlayer = firstPlayer; 
+            jugador<T> auxJugador = primeJugador; 
             int count = 0;
             while(count < size){
-            // Prints the current player and advances to the next
-            System.out.println(auxPlayer.getPlayerValue());
-            auxPlayer = auxPlayer.getNextPlayer();
-            count++;
+                System.out.println(auxJugador.getValorJugador());
+                auxJugador = auxJugador.getSiguienteJugador();
+                count++;
+            }
+
         }
-    }
 }

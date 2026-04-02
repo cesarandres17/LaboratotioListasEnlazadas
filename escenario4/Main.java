@@ -5,15 +5,15 @@ public class Main {
     public static void main(String[] args){
         ListaDobleEnlazada<String> players = new ListaDobleEnlazada<>();
     
-    players.addPlayer("carlos");
-    players.addPlayer("juan");
-    players.addPlayer("pedro");
-    players.printList();
+    players.AgregarJugador("carlos");
+    players.AgregarJugador("juan");
+    players.AgregarJugador("pedro");
+    players.imprimirLista();
 
-    System.out.println("REMOVE PLAYER---------------");
-    players.removePlayer(1);
-    System.out.println("PRINT BY INDEX 2 = PEDRO");
-    players.printByIndex(2);
+    System.out.println("ELIMINAR JUGADORS---------------");
+    players.Eliminar(1);
+    System.out.println("IMPRIMIR POR INDICE 2 = PEDRO");
+    players.imprimirPorIndice(2);
 
     
     }
