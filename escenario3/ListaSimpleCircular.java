@@ -42,8 +42,6 @@ public class ListaSimpleCircular<T> implements Iterable<T> {
 		tamanio = 0;
 	}
 
-
-
     /**
      * Agrega una nueva canción al final de la lista circular.
      * 
@@ -62,21 +60,20 @@ public class ListaSimpleCircular<T> implements Iterable<T> {
         if(PrimeraCancion== null){
              PrimeraCancion = nuevaCancion;
              PrimeraCancion.setSiguienteCancion(PrimeraCancion);
-
+             UltimaCancion = nuevaCancion;
+             return;
         }
         // Caso 2: Lista con un solo elemento - crea el círculo inicial
         else if(PrimeraCancion.getSiguienteCancion() == null){
-
             PrimeraCancion.setSiguienteCancion(nuevaCancion);
             nuevaCancion.setSiguienteCancion(PrimeraCancion);
             UltimaCancion = nuevaCancion;
-
         }
         // Caso 3: Lista con múltiples elementos - encuentra el último y conecta
         else{
             Cancion<T> aux = PrimeraCancion;
             // Recorre hasta encontrar el último (su siguiente es el primero)
-            while (aux.getSiguienteCancion()!= PrimeraCancion) {
+            while (aux.getSiguienteCancion()!= PrimeraCancion){
                 aux = aux.getSiguienteCancion();  
             }
             // Conecta el último con el nuevo y el nuevo con el primero
@@ -84,11 +81,21 @@ public class ListaSimpleCircular<T> implements Iterable<T> {
             nuevaCancion.setSiguienteCancion(PrimeraCancion);
             UltimaCancion = nuevaCancion;
         }
-
         tamanio++;
     }    
 
-
+    /**
+     * Elimina una canción de la lista circular por su índice.
+     * 
+     * Casos manejados:
+     * - Lista vacía: no se puede eliminar
+     * - Índice fuera de límites: mensaje de error
+     * - Eliminar primero (índice 0): actualiza referencias circulares
+     * - Eliminar segundo (índice 1): conecta primero con tercero
+     * - Eliminar general (índice ≥ 2): conecta anterior con siguiente del eliminado
+     * 
+     * @param indice Posición de la canción a eliminar (0 a tamanio-1)
+     */
     public  void eliminarCancion(int indice){
 
         Cancion<T> cancionAux = PrimeraCancion;
@@ -96,7 +103,10 @@ public class ListaSimpleCircular<T> implements Iterable<T> {
 
         if(PrimeraCancion == null || PrimeraCancion.getSiguienteCancion()== null){
             return;
-
+        }
+        if(indice > tamanio || indice < 0){
+            System.out.println("el indice estra por fuera de los limites de la lista. ");
+            return;
         }
         else if(indice == 0) {
             Cancion<T> ultimo = PrimeraCancion;
@@ -133,7 +143,16 @@ public class ListaSimpleCircular<T> implements Iterable<T> {
 
     }
 
-
+    /**
+     * Busca y muestra una canción específica por su índice.
+     * 
+     * Casos manejados:
+     * - Lista vacía: mensaje indicando que no hay canciones
+     * - Índice fuera de límites: mensaje de error
+     * - Índice general: recorre hasta encontrar la canción solicitada
+     * 
+     * @param indice Posición de la canción a buscar (0 a tamanio-1)
+     */
     public void buscarPorIndice(int indice){
 
         Cancion<T> auxCancion = PrimeraCancion;
@@ -148,21 +167,25 @@ public class ListaSimpleCircular<T> implements Iterable<T> {
             return;
         }
 
-
         while(count < indice){
             auxCancion = auxCancion.getSiguienteCancion();
             count++;
-
         }
         System.out.println(auxCancion.getValorCancion());
 
     }
 
-
+    /**
+     * Muestra todas las canciones de la lista en orden circular.
+     * 
+     * Funcionamiento:
+     * - Si la lista está vacía: muestra mensaje apropiado
+     * - Recorre circularmente mostrando cada canción
+     * - Utiliza un contador para evitar bucles infinitos
+     */
     public void imprimirLista(){
 
         Cancion<T> aux = PrimeraCancion;
-
 
         if(PrimeraCancion == null){
             System.out.println("lsita vacia");
@@ -174,24 +197,12 @@ public class ListaSimpleCircular<T> implements Iterable<T> {
             aux = aux.getSiguienteCancion();
             count ++;
             System.out.println(aux.getValorCancion());
-            
         }
-
-
     }
-
-
 
     @Override
     public Iterator<T> iterator() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'iterator'");
     }
-    
-
-
-    
-
-
-
 }
